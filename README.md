@@ -2,13 +2,13 @@ Description
 ----
 This plugin provides waardepieren functionality for wordpress, it has an optional support in place for grafity forms but can be used without it
 
-##About Waardepapieren
+## About Waardepapieren
 
 The waardenpapieren project aims at digitizing proof from the dutch government for its citizens (e.g. birth certificates, marriage certificates and proof of residence and residential history) it is based on the [W3C claims structure](https://w3c.github.io/vc-data-model/#claims) for standardization.
 
 At the core of the waardepapieren concept is that a “proof” should be applicable both digital and non-digital. Therefore a proof is presented as a PDF containing an JTW based claim, the claim itself however can also be used separately. For more information about the inner workings of waardepapieren see the waardepapieren service at it [repro]( https://github.com/ConductionNL/waardepapieren-service).
 
-##Online test environment
+## Online test environment
 There are several online environments available for testing
 
 1. [Example user interface](https://waardepapieren-gemeentehoorn.commonground.nu)
@@ -17,16 +17,16 @@ There are several online environments available for testing
 4. [Example Waardepapieren Service](https://waardepapieren-gemeentehoorn.commonground.nu/api/v1/waar)
 5. [Example Waardepapieren Registration](https://waardepapieren-gemeentehoorn.commonground.nu/api/v1/wari )
 
-##Dependencies
+## Dependencies
 
 For this repository you will need an API key at a waardepapieren service, a valid api key can be obtained at [Dimpac](https://www.dimpact.nl/) a key for the test api can be obtained from [Conduction](https://condution.nl).
 
-##Installation 
+## Installation 
 This Wordpress plugin can be installed from the [wordpress plugin store](https://wordpress.org/plugins/).
 
 Afther installation and activation the plugin must be configures before it can be used. 
 
-##Other Repro’s
+## Other Repro’s
 *UI*
 1. [Burger interface](https://github.com/ConductionNL/waardepapieren) 
 2. [Ballie interface](https://github.com/ConductionNL/waardepapieren-ballie)
