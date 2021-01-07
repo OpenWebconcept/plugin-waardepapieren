@@ -12,7 +12,7 @@
  * Plugin Name:       Waardepapieren
  * Plugin URI:        https://conduction.nl/waardepapieren
  * Description:       De waardepapieren plugin
- * Version:           1.0.6
+ * Version:           1.0.8
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Conduction
@@ -161,7 +161,9 @@ function waardepapieren_organization_field_callback() {
 function waardepapieren_form_shortcode() {
     // do something to $content
     // always return
-    return file_get_contents (plugin_dir_url(__FILE__) . 'public/form.php');
+    $url = esc_url( admin_url('admin-post.php'));
+    $formtag = "<form action=\"".$url."\" method=\"post\">";
+    return $formtag.file_get_contents (plugin_dir_url(__FILE__) . 'public/form.php');
 }
 add_shortcode('waardepapieren-form', 'waardepapieren_form_shortcode');
 
