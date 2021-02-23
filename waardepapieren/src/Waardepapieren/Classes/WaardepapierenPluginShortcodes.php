@@ -35,14 +35,16 @@ class WaardepapierenPluginShortcodes
                 }
             }
 
+            $organization = get_option('waardepapieren_organization', '');
+
             if (empty($type) || empty($bsn) || empty($organization)) {
                 return;
             }
 
             $data = [
-                "person"        => get_option('waardepapieren_api_domain', '')."/api/v1/brp/ingeschrevenpersonen/" . $bsn,
+                "person"        => get_option('waardepapieren_api_domain', '') . "/api/v1/brp/ingeschrevenpersonen/" . $bsn,
                 "type"          => $type,
-                "organization"  => get_option('waardepapieren_organization', '')
+                "organization"  => $organization
             ];
 
             $this->waardepapieren_post($data);
@@ -53,13 +55,13 @@ class WaardepapierenPluginShortcodes
      * Handles post from this Gravity Form that uses the advanced fields Waardepapier Person and Waardepapier Type.
      *
      * @param array $data should contain an array with a person, type and organization value.
-     * 
+     *
      * @return void
      */
     public function waardepapieren_post(array $data): void
     {
         $key      = get_option('waardepapieren_api_key', '');
-        $endpoint = get_option('waardepapieren_api_domain', '').'/api/v1/waar/certificates';
+        $endpoint = get_option('waardepapieren_api_domain', '') . '/api/v1/waar/certificates';
 
         if (empty($key) || empty($endpoint)) {
             return;
@@ -124,7 +126,7 @@ class WaardepapierenPluginShortcodes
      * @param string $value
      * @param string $type
      * @param boolean $isClaim
-     * 
+     *
      * @return string
      */
     private function createButton(string $value, string $type, bool $isClaim = false): string
@@ -141,7 +143,7 @@ class WaardepapierenPluginShortcodes
      *
      * @param string $type
      * @param array $downloadButtons
-     * 
+     *
      * @return string
      */
     private function shortcodeResult(string $type, array $downloadButtons): string
