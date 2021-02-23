@@ -14,6 +14,7 @@ class GFFieldWaardePapierType extends \GF_Field_Select
         parent::__construct($data);
 
         $this->label = 'Waardepapieren Type';
+        // TODO:Get choices from waardepapieren service
         $this->choices = [
             [
                 'text' => 'Akte van geboorte',
