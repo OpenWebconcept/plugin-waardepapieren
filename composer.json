@@ -1,0 +1,7 @@
+{
+	"name": "plugin/waarde-papieren",
+	"require": {
+		"php": "^7.4.0",
+		"guzzlehttp/guzzle": "^6.3"
+	}
+}
