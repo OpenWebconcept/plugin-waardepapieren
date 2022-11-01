@@ -1,0 +1,21 @@
+name: "plugin-waardepapieren"
+
+publiccodeYmlVersion: 1.0
+url: "https://github.com/OpenWebconcept/plugin-waardepapieren"
+
+platforms:
+  - "web"
+
+categories:
+  - "application-development"
+
+softwareType: "softwareAddon"
+
+description:
+  localisedName: "plugin-waardepapieren"
+  shortDescription: "Wordpress functionaliteit voor waardepapieren"
+  longDescription: "Bevat een gravityforms plugin om een waardepapier te selecteren en een post naar een configureerbare url naar een common gateway waar het waardepapier aangemaakt wordt."
+
+nl:
+  commonground:
+    layerType: "service"
