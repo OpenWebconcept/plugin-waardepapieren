@@ -37,14 +37,14 @@ class WaardepapierenPluginShortcodes
 
             $organization = get_option('waardepapieren_organization', '');
 
-            if (empty($type) || empty($bsn) || empty($organization)) {
+            if (empty($type) || empty($bsn)) {
                 return;
             }
 
             $data = [
-                "person"        => get_option('waardepapieren_api_domain', '') . "/api/v1/brp/ingeschrevenpersonen/" . $bsn,
+                "person"        => $bsn,
                 "type"          => $type,
-                "organization"  => $organization
+                "organization"  => isset($organization) ? $organization : 'Demodam'
             ];
 
             $this->waardepapieren_post($data);
@@ -61,7 +61,7 @@ class WaardepapierenPluginShortcodes
     public function waardepapieren_post(array $data): void
     {
         $key      = get_option('waardepapieren_api_key', '');
-        $endpoint = get_option('waardepapieren_api_domain', '') . '/api/v1/waar/certificates';
+        $endpoint = get_option('waardepapieren_api_domain', '') . '/api/waar/certificates';
 
         if (empty($key) || empty($endpoint)) {
             return;
