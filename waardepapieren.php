@@ -12,7 +12,7 @@
  * Plugin Name:       Waardepapieren
  * Plugin URI:        https://conduction.nl/waardepapieren
  * Description:       De waardepapieren plugin
- * Version:           1.0.9.3
+ * Version:           1.1.3
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Conduction
@@ -46,8 +46,8 @@ $plugin = (new Plugin(__DIR__))->boot();
 /**
  * Start session on init when there is none.
  */
-// add_action('init', function () {
-//     if (session_status() === PHP_SESSION_NONE) {
-//         session_start();
-//     }
-// });
+add_action('init', function () {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+});

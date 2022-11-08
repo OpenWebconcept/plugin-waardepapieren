@@ -60,45 +60,47 @@ class WaardepapierenPluginShortcodes
      */
     public function waardepapieren_post(array $data): void
     {
-        // $key      = get_option('waardepapieren_api_key', '');
+        $key      = get_option('waardepapieren_api_key', '');
         $endpoint = get_option('waardepapieren_api_domain', '') . '/api/waar/certificates';
 
         // if (empty($key) || empty($endpoint)) {
         if (empty($endpoint)) {
-            var_dump('returned');
             return;
         }
 
         // unset any existing session.
         unset($_SESSION['certificate']);
 
-        var_dump('start post');
-        // session_write_close();
+        $headers = ['Content-Type' => 'application/json'];
+        isset($key) && !empty($key) && $headers['Authorization'] = $key;
+        // var_dump($headers);
+
         $data = wp_remote_post($endpoint, [
-            // 'headers'     => ['Content-Type' => 'application/json', 'Authorization' => $key],
-            'headers'     => ['Content-Type' => 'application/json'],
+            'headers'     => $headers,
             'body'        => json_encode($data),
             'method'      => 'POST',
             'data_format' => 'body',
+            'timeout'     => 20
         ]);
-        // session_start();
 
         if (is_wp_error($data)) {
-            var_dump('ERROR: ', $data);
+            // var_dump($data);
             return;
         }
 
         $responseBody = wp_remote_retrieve_body($data);
+        // var_dump($responseBody);
 
         if (is_wp_error($responseBody)) {
-            var_dump('ERROR BODY: ', $responseBody);
+            // var_dump($responseBody);
             return;
         }
 
-
         $decodedBody = json_decode($responseBody, true);
+        var_dump($decodedBody);
 
         $_SESSION['certificate'] = $decodedBody;
+        // die;
     }
 
     /**
@@ -125,8 +127,7 @@ class WaardepapierenPluginShortcodes
         }
 
         $type = $_SESSION['certificate']['type'] ?? 'Type onbekend';
-
-        var_dump('CERTIFICATE: ', $_SESSION['certificate']);
+        // var_dump($_SESSION['certificate']);
 
         return $this->shortcodeResult($type, $downloadButtons);
     }
