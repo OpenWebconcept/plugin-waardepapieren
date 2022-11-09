@@ -73,7 +73,6 @@ class WaardepapierenPluginShortcodes
 
         $headers = ['Content-Type' => 'application/json'];
         isset($key) && !empty($key) && $headers['Authorization'] = $key;
-        // var_dump($headers);
 
         $data = wp_remote_post($endpoint, [
             'headers'     => $headers,
@@ -84,20 +83,16 @@ class WaardepapierenPluginShortcodes
         ]);
 
         if (is_wp_error($data)) {
-            // var_dump($data);
             return;
         }
 
         $responseBody = wp_remote_retrieve_body($data);
-        // var_dump($responseBody);
 
         if (is_wp_error($responseBody)) {
-            // var_dump($responseBody);
             return;
         }
 
         $decodedBody = json_decode($responseBody, true);
-        var_dump($decodedBody);
 
         $_SESSION['certificate'] = $decodedBody;
         // die;
@@ -127,7 +122,6 @@ class WaardepapierenPluginShortcodes
         }
 
         $type = $_SESSION['certificate']['type'] ?? 'Type onbekend';
-        // var_dump($_SESSION['certificate']);
 
         return $this->shortcodeResult($type, $downloadButtons);
     }
