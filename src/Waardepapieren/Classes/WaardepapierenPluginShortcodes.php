@@ -3,15 +3,18 @@
 namespace OWC\Waardepapieren\Classes;
 
 use OWC\Waardepapieren\Foundation\Plugin;
+use OWC\Waardepapieren\Classes\GFFieldWaardePapierType;
 
 class WaardepapierenPluginShortcodes
 {
     /** @var Plugin */
     protected $plugin;
+    protected $typeService;
 
-    public function __construct(Plugin $plugin)
+    public function __construct(Plugin $plugin, GFFieldWaardePapierType $typeService)
     {
         $this->plugin = $plugin;
+        $this->typeService = $typeService;
         $this->add_shortcode();
         $this->load_hooks();
     }
@@ -24,26 +27,37 @@ class WaardepapierenPluginShortcodes
     private function load_hooks(): void
     {
         add_action('gform_after_submission', function ($entry, $form) {
+            unset($_SESSION['certificate']);
+
+            $organization = get_option('waardepapieren_organization', '');
+
             foreach ($form['fields'] as $field) {
                 switch ($field['type']) {
                     case 'waardepapier':
-                        $type = rgar($entry, (string) $field->id);
+                        $this->type = rgar($entry, (string) $field->id);
                         break;
                     case 'person':
-                        $bsn = rgar($entry, (string) $field->id);
+                        $this->bsn = rgar($entry, (string) $field->id);
                         break;
                 }
             }
 
-            $organization = get_option('waardepapieren_organization', '');
+            $templates = $this->typeService->getTemplates();
+            $this->isValid = false;
+            foreach ($templates as $template) {
+                if (isset($template['description']) && $template['description'] == $this->type) {
+                    $this->isValid = true;
+                }
+            }
 
-            if (empty($type) || empty($bsn)) {
+
+            if (empty($this->type) || empty($this->bsn) || !$this->isValid) {
                 return;
             }
 
             $data = [
-                "person"        => $bsn,
-                "type"          => $type,
+                "person"        => $this->bsn,
+                "type"          => $this->type,
                 "organization"  => isset($organization) ? $organization : 'Demodam'
             ];
 
