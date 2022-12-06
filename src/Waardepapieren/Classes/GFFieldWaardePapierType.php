@@ -37,8 +37,12 @@ class GFFieldWaardePapierType extends \GF_Field_Select
 
     public function getTemplates()
     {
-        $key      = get_option('waardepapieren_api_key', '');
-        $endpoint = get_option('waardepapieren_api_domain', '') . '/api/template_groups?name=Waardepapieren certificaten';
+        $key = get_option('waardepapieren_api_key', '');
+        $templateGroupID = get_option('waardepapieren_api_templategroupid', '');
+        if (empty($templateGroupID)) {
+            return [];
+        }
+        $endpoint = get_option('waardepapieren_api_domain', '') . '/api/template_groups/' . $templateGroupID;
 
         $headers = ['Content-Type' => 'application/json'];
         isset($key) && !empty($key) && $headers['Authorization'] = $key;
@@ -52,19 +56,19 @@ class GFFieldWaardePapierType extends \GF_Field_Select
         ]);
 
         if (is_wp_error($data)) {
-            return;
+            return [];
         }
 
         $responseBody = wp_remote_retrieve_body($data);
 
         if (is_wp_error($responseBody)) {
-            return;
+            return [];
         }
 
         $decodedJson = json_decode($responseBody, true);
 
-        if (isset($decodedJson['results'][0]['embedded']['templates'])) {
-            return $decodedJson['results'][0]['embedded']['templates'];
+        if (isset($decodedJson['embedded']['templates'])) {
+            return $decodedJson['embedded']['templates'];
         } else {
             return [];
         }
