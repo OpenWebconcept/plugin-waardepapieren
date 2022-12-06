@@ -12,7 +12,7 @@
  * Plugin Name:       Waardepapieren
  * Plugin URI:        https://conduction.nl/waardepapieren
  * Description:       De waardepapieren plugin
- * Version:           1.1.4
+ * Version:           1.2.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Conduction
