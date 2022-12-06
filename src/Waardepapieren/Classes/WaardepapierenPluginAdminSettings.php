@@ -64,6 +64,7 @@ class WaardepapierenPluginAdminSettings
         // register a new setting for "reading" page
         register_setting('waardepapieren_options', 'waardepapieren_api_domain');
         register_setting('waardepapieren_options', 'waardepapieren_api_key');
+        register_setting('waardepapieren_options', 'waardepapieren_api_templategroupid');
         register_setting('waardepapieren_options', 'waardepapieren_organization');
 
         // register a new section in the "reading" page
@@ -97,6 +98,15 @@ class WaardepapierenPluginAdminSettings
             'waardepapieren_organization_field',
             'Organization',
             [$this, 'waardepapieren_organization_field_callback'],
+            'waardepapieren_api',
+            'default'
+        );
+
+        // register a new field in the "wporg_settings_section" section, inside the "reading" page
+        add_settings_field(
+            'waardepapieren_api_templategroupid_field',
+            'TemplateGroup ID',
+            [$this, 'waardepapieren_api_templategroupid_field_callback'],
             'waardepapieren_api',
             'default'
         );
@@ -140,6 +150,16 @@ class WaardepapierenPluginAdminSettings
         // output the field
     ?>
         <input type="text" name="waardepapieren_organization" value="<?php echo isset($setting) ? esc_attr($setting) : ''; ?>">
+    <?php
+    }
+
+    public function waardepapieren_api_templategroupid_field_callback()
+    {
+        // get the value of the setting we've registered with register_setting()
+        $setting = get_option('waardepapieren_api_templategroupid');
+        // output the field
+    ?>
+        <input type="text" name="waardepapieren_api_templategroupid" value="<?php echo isset($setting) ? esc_attr($setting) : ''; ?>">
 <?php
     }
 }
